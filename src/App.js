@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// components 
+import Titles from './components/Titles';
+import Form from './components/Form';
+import Weather from './components/Weather';
+
+// api
+import { getWeatherEndpoint } from './endpoints';
+
+class App extends React.Component {
+  getWeather = async () => {
+    const response = await fetch(getWeatherEndpoint());
+    const data = await response.json();
+    console.log('data:', data);
+  }
+
+  render() {
+    return (
+      <div>
+        <Titles />
+        <Form getWeather={this.getWeather} />
+        <Weather />
+      </div>
+    );
+  }
 }
 
 export default App;
